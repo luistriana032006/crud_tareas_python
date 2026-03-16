@@ -6,20 +6,39 @@ from service.task_Repository import task_repository
 class TaskService(task_repository):
 ## listas de taras
     
-    ## constructor
+    ## constructor￼
+
     def __init__(self):
         self.tasks: list[taskmodel] = []
+        
 
 
     def create_task(self, task: taskmodel) -> None:
-        
-        raise NotImplementedError
+        self.tasks.append(task)
+      
 
     def find_by_id(self, id: int) -> taskmodel | None:
-        raise NotImplementedError
+        if (id<=0):
+            raise ValueError("el id que ingreso es negativo o cero")
+        
+        for t in self.tasks:
+            if id == t.id:
+                return t
+
+        return None
+
 
     def update_task(self, task: taskmodel) -> taskmodel:
-        raise NotImplementedError
+        tasklist = self.find_by_id(task.id)
+        if tasklist is None:
+            raise ValueError("no encontrado")
+
+        tasklist.name = task.name
+        tasklist.complete= task.complete
+        tasklist.description=task.description
+
+
+        return tasklist
 
     def delete(self, id: int) -> None:
         raise NotImplementedError
