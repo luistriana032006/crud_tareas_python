@@ -1,4 +1,6 @@
 
+from multiprocessing import Value
+from sre_parse import NOT_LITERAL_UNI_IGNORE
 from models.task import taskmodel
 from service.task_Repository import task_repository
 
@@ -14,7 +16,11 @@ class TaskService(task_repository):
 
 
     def create_task(self, task: taskmodel) -> None:
-        self.tasks.append(task)
+       resultado = self.find_by_id(task.id)
+       if resultado is not None:
+            raise ValueError("id duplicado")
+       self.tasks.append(task)
+
       
 
     def find_by_id(self, id: int) -> taskmodel | None:
@@ -41,10 +47,16 @@ class TaskService(task_repository):
         return tasklist
 
     def delete(self, id: int) -> None:
-        raise NotImplementedError
+        r = self.find_by_id(id)
+        if r is None:
+            raise ValueError("el id no se encontro")
+
+        self.tasks.remove(r)
+       
 
     def find_all(self) -> list[taskmodel]:
-        raise NotImplementedError
+        return self.tasks
+        
 
 
     
