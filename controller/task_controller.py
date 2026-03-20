@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from service.task_service import TaskService
-from models.task_requests import taskRequest
+from models.dto.task_requests import taskRequest
 
 app = FastAPI()
 service = TaskService()
@@ -22,8 +22,8 @@ def find_by_id(id: int):
 
 @app.post("/tasks")
 def create_task(request: taskRequest):
-    request= request.to_model()
-    return service.create_task(request)
+    task= request.to_model()
+    return service.create_task(task)
 
 
 ## eliminar una tarea
@@ -36,5 +36,5 @@ def delete_task(id: int):
 
 @app.put("/tasks")
 def update_task(request: taskRequest):
-    request= request.to_model()
-    return service.update_task(request)
+    task= request.to_model()
+    return service.update_task(task)
