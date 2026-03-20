@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:8000
+
+### get all task
+GET {{baseUrl}}/tasks
+
+### get task by id
+GET {{baseUrl}}/tasks/1
+
+
+### create task
+
+POST {{baseUrl}}/tasks
+Content-Type:application/json
+
+{
+"id": 123,
+"name": "crear un todo",
+"description":"crear un todo para la empresa x",
+"complete": "False"
+}
+
+### update task
+PUT  {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+"id":123,
+"name": "crear un todo",
+"description":"crear un todo para la empresa x",
+"complete": "True"
+}
+
